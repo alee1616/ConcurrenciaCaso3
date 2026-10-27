@@ -1,0 +1,111 @@
+/* ===== Fondo ===== */
+.root-pane {
+    -fx-background-color: linear-gradient(to bottom right, #0F172A, #1E1B4B);
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+/* ===== Títulos ===== */
+.titulo {
+    -fx-text-fill: #F8FAFC;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+.subtitulo {
+    -fx-text-fill: #94A3B8;
+    -fx-font-size: 13px;
+}
+
+/* ===== Tarjetas ===== */
+.card {
+    -fx-background-color: #1E293B;
+    -fx-background-radius: 14;
+    -fx-border-color: #334155;
+    -fx-border-radius: 14;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 12, 0, 0, 4);
+}
+.card-titulo {
+    -fx-text-fill: #94A3B8;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+.valor {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+.valor-indigo { -fx-text-fill: #A5B4FC; }
+.valor-verde  { -fx-text-fill: #34D399; }
+.valor-ambar  { -fx-text-fill: #FBBF24; }
+
+/* ===== Vendedores ===== */
+.vendedor-nombre {
+    -fx-text-fill: #E2E8F0;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.conteo {
+    -fx-text-fill: #94A3B8;
+    -fx-font-size: 14px;
+}
+
+/* ===== Barras de progreso ===== */
+.progress-bar > .track {
+    -fx-background-color: #334155;
+    -fx-background-insets: 0;
+    -fx-background-radius: 8;
+}
+.progress-bar > .bar {
+    -fx-background-insets: 0;
+    -fx-background-radius: 8;
+    -fx-padding: 7;
+}
+.barra-v1 > .bar { -fx-background-color: linear-gradient(to right, #6366F1, #818CF8); }
+.barra-v2 > .bar { -fx-background-color: linear-gradient(to right, #14B8A6, #5EEAD4); }
+.barra-v3 > .bar { -fx-background-color: linear-gradient(to right, #F59E0B, #FCD34D); }
+
+/* ===== Estado (insignia) ===== */
+.badge {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 6 16;
+    -fx-background-radius: 20;
+}
+.estado-lista       { -fx-background-color: #475569; }
+.estado-ejecutando  { -fx-background-color: #6366F1; }
+.estado-cancelando  { -fx-background-color: #D97706; }
+.estado-completada  { -fx-background-color: #10B981; }
+.estado-cancelada   { -fx-background-color: #F43F5E; }
+
+/* ===== Integridad ===== */
+.integridad-ok    { -fx-text-fill: #34D399; -fx-font-size: 13px; }
+.integridad-error { -fx-text-fill: #FB7185; -fx-font-size: 13px; -fx-font-weight: bold; }
+
+/* ===== Botones ===== */
+.boton {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 28;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+.boton-iniciar { -fx-background-color: linear-gradient(to bottom, #10B981, #059669); }
+.boton-iniciar:hover { -fx-background-color: linear-gradient(to bottom, #34D399, #10B981); }
+.boton-cancelar { -fx-background-color: linear-gradient(to bottom, #F43F5E, #E11D48); }
+.boton-cancelar:hover { -fx-background-color: linear-gradient(to bottom, #FB7185, #F43F5E); }
+.boton:disabled { -fx-opacity: 0.35; }
+
+/* ===== Registro ===== */
+.log-area {
+    -fx-control-inner-background: #0B1220;
+    -fx-text-fill: #CBD5E1;
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-size: 12px;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #1E293B;
+}
+.log-area .content {
+    -fx-background-color: #0B1220;
+    -fx-background-radius: 10;
+}

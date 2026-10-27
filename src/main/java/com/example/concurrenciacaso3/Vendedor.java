@@ -1,57 +1,57 @@
 package com.example.concurrenciacaso3;
 
-import javafx.concurrent.Task;
+import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.BooleanSupplier;
 
-public class Vendedor extends Task<Void> {
-    private final int idVendedor;
+/**
+ * Tarea de un vendedor: realiza hasta 5 ventas de C$100.
+ * Cancelación cooperativa: la bandera se consulta ANTES de iniciar cada venta.
+ * Una venta ya iniciada se termina y se registra completa (sin registros parciales).
+ */
+public final class Vendedor implements Runnable {
+
+    public static final int VENTAS_POR_VENDEDOR = 5;
+
+    private final int indice;
     private final CajaVentas caja;
-    private final Runnable onVentaCallback;
-    private static final int MAX_VENTAS = 5;
+    private final BooleanSupplier cancelado;
+    private final int minMs;
+    private final int maxMs;
 
-    public Vendedor(int idVendedor, CajaVentas caja, Runnable onVentaCallback) {
-        this.idVendedor = idVendedor;
-        this.caja = caja;
-        this.onVentaCallback = onVentaCallback;
+    public Vendedor(int indice, CajaVentas caja, BooleanSupplier cancelado, int minMs, int maxMs) {
+        if (indice < 0) {
+            throw new IllegalArgumentException("Índice de vendedor inválido: " + indice);
+        }
+        if (minMs < 0 || maxMs < minMs) {
+            throw new IllegalArgumentException("Rango de tiempo inválido: " + minMs + "-" + maxMs);
+        }
+        this.indice = indice;
+        this.caja = Objects.requireNonNull(caja, "caja");
+        this.cancelado = Objects.requireNonNull(cancelado, "cancelado");
+        this.minMs = minMs;
+        this.maxMs = maxMs;
     }
 
     @Override
-    protected Void call() throws Exception {
-        for (int i = 1; i <= MAX_VENTAS; i++) {
-            // Revisión 1: Si presionaron cancelar, detenerse inmediatamente
-            if (isCancelled()) {
-                updateMessage("Cancelado");
-                break;
+    public void run() {
+        for (int i = 0; i < VENTAS_POR_VENDEDOR; i++) {
+            if (cancelado.getAsBoolean()) {
+                return; // no se inicia una venta nueva
             }
-
-            // Simula el tiempo que tarda la venta (1.2 segundos)
-            Thread.sleep(1200);
-
-            // Revisión 2: Verificar cancelación después de la espera antes de guardar
-            if (isCancelled()) {
-                updateMessage("Cancelado");
-                break;
-            }
-
-            // Guardar la venta en la caja segura
-            caja.registrarVenta();
-
-            // Avisar a la ventana para que actualice la pantalla
-            if (onVentaCallback != null) {
-                onVentaCallback.run();
-            }
-
-            // Actualizar barra de progreso y texto del vendedor
-            updateProgress(i, MAX_VENTAS);
-            updateMessage("Venta " + i + " de " + MAX_VENTAS);
+            atenderCliente();            // trabajo fuera de la sección crítica
+            caja.registrarVenta(indice); // sección crítica corta y atómica
         }
-
-        if (!isCancelled()) {
-            updateMessage("Completado (5/5)");
-        }
-        return null;
     }
 
-    public int getIdVendedor() {
-        return idVendedor;
+    private void atenderCliente() {
+        try {
+            long ms = maxMs > minMs
+                    ? ThreadLocalRandom.current().nextLong(minMs, maxMs + 1)
+                    : minMs;
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // la venta en curso igual se registra
+        }
     }
 }

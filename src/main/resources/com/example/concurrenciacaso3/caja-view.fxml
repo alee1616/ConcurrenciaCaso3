@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.concurrenciacaso3.CajaController"
+            styleClass="root-pane">
+    <padding>
+        <Insets top="22" right="26" bottom="22" left="26"/>
+    </padding>
+
+    <top>
+        <VBox spacing="4">
+            <padding>
+                <Insets bottom="18"/>
+            </padding>
+            <Label text="Caja de Ventas Concurrente" styleClass="titulo"/>
+            <Label text="3 vendedores · 5 ventas cada uno · C$100 por venta" styleClass="subtitulo"/>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="16">
+
+            <HBox spacing="16">
+                <VBox styleClass="card" spacing="6" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                    <Label text="VENTAS TOTALES" styleClass="card-titulo"/>
+                    <Label fx:id="lblTotalVentas" text="0 / 15" styleClass="valor, valor-indigo"/>
+                </VBox>
+                <VBox styleClass="card" spacing="6" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                    <Label text="RECAUDACIÓN" styleClass="card-titulo"/>
+                    <Label fx:id="lblRecaudacion" text="C$ 0.00" styleClass="valor, valor-verde"/>
+                </VBox>
+                <VBox styleClass="card" spacing="6" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                    <Label text="TRABAJADORES ACTIVOS" styleClass="card-titulo"/>
+                    <Label fx:id="lblActivos" text="0" styleClass="valor, valor-ambar"/>
+                </VBox>
+            </HBox>
+
+            <VBox styleClass="card" spacing="14">
+                <Label text="AVANCE POR VENDEDOR" styleClass="card-titulo"/>
+                <GridPane hgap="14" vgap="14">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="100"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints minWidth="170" halignment="RIGHT"/>
+                    </columnConstraints>
+
+                    <Label text="Vendedor 1" styleClass="vendedor-nombre"
+                           GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <ProgressBar fx:id="pbVendedor1" progress="0.0" maxWidth="Infinity" styleClass="barra-v1"
+                                 GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS"/>
+                    <Label fx:id="lblEstadoV1" text="Sin iniciar" styleClass="conteo"
+                           GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
+                    <Label text="Vendedor 2" styleClass="vendedor-nombre"
+                           GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <ProgressBar fx:id="pbVendedor2" progress="0.0" maxWidth="Infinity" styleClass="barra-v2"
+                                 GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS"/>
+                    <Label fx:id="lblEstadoV2" text="Sin iniciar" styleClass="conteo"
+                           GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+                    <Label text="Vendedor 3" styleClass="vendedor-nombre"
+                           GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <ProgressBar fx:id="pbVendedor3" progress="0.0" maxWidth="Infinity" styleClass="barra-v3"
+                                 GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS"/>
+                    <Label fx:id="lblEstadoV3" text="Sin iniciar" styleClass="conteo"
+                           GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                </GridPane>
+            </VBox>
+
+            <HBox spacing="14" alignment="CENTER_LEFT">
+                <Label text="Estado:" styleClass="subtitulo"/>
+                <Label fx:id="lblEstadoGeneral" text="Lista para iniciar" styleClass="badge"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblEjecuciones" text="Ejecuciones completas correctas: 0" styleClass="subtitulo"/>
+            </HBox>
+            <Label fx:id="lblIntegridad" text="✔ Integridad: recaudación = ventas × C$100"
+                   styleClass="integridad-ok"/>
+
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button fx:id="btnIniciar" text="▶  Iniciar" onAction="#handleIniciar"
+                        styleClass="boton, boton-iniciar"/>
+                <Button fx:id="btnCancelar" text="■  Cancelar" onAction="#handleCancelar"
+                        styleClass="boton, boton-cancelar"/>
+            </HBox>
+
+            <VBox styleClass="card" spacing="8" VBox.vgrow="ALWAYS">
+                <Label text="REGISTRO DE EVENTOS" styleClass="card-titulo"/>
+                <TextArea fx:id="txtLog" editable="false" wrapText="true" styleClass="log-area"
+                          VBox.vgrow="ALWAYS" prefRowCount="6"/>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

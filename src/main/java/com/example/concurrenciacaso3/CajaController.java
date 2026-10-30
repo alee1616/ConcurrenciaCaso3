@@ -119,6 +119,8 @@ public class CajaController {
         if (refresco != null) {
             refresco.stop();
         }
+        System.out.println("[CIERRE] Trabajadores activos al cerrar: "
+                + servicio.trabajadoresActivos());
     }
 
     // fases
